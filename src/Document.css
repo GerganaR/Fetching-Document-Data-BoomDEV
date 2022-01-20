@@ -1,0 +1,13 @@
+.title {
+  font-style: bold;
+  font-size: 30px;
+}
+.content {
+  height: 500px;
+  width: 50vw;
+  overflow: scroll;
+}
+.button {
+  margin-top: 15px;
+  padding: 10px 30px;
+}

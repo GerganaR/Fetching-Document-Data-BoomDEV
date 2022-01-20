@@ -1,29 +1,34 @@
-import React, { useState } from "react";
-import styles from "./Document.module.css";
+import react from "react";
+import { useRef, useState } from "react";
 
-export default function Document(props) {
-  const [isRead, setisRead] = useState(false);
+export default function Document({ title, content }) {
+  const [disabled, setDisabled] = useState(true);
+  const listInnerRef = useRef();
 
-  const handleScroll = () => {
-    let content = document.getElementsByClassName("content")[0];
-
-    if (content.scrollTop + content.offsetHeight >= content.scrollHeight) {
-      setisRead(true);
+  function handleScroll() {
+    if (
+      listInnerRef.current.offsetHeight + listInnerRef.current.scrollTop >=
+      listInnerRef.current.scrollHeight
+    ) {
+      setDisabled((disabled) => false);
+      console.log("reached it");
     }
-  };
+  }
 
   return (
     <div>
-      <div className={styles.title}>{props.title}</div>
-      <div className={styles.content} onScroll={handleScroll}>
-        {props.content}
+      <h1 className="title">{title}</h1>
+      <div
+        className="content"
+        onScroll={handleScroll}
+        ref={listInnerRef}
+        style={{ overflow: "auto", width: "600px", height: "400px" }}
+      >
+        {content}
       </div>
-
-      {isRead ? (
-        <button className={styles.allowed}>I agree</button>
-      ) : (
-        <button className={styles.notAllowed}>I agree</button>
-      )}
+      <button type="button" disabled={disabled}>
+        I Agree!
+      </button>
     </div>
   );
 }
